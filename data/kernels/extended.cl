@@ -122,7 +122,7 @@ relight (read_only image2d_t in, write_only image2d_t out, const int width, cons
   if(isnan(gauss) || isinf(gauss))
     gauss = 0.0f;
 
-  float relight = 1.0f / exp2(-ev * clamp(gauss, 0.0f, 1.0f));
+  float relight = 1.0f / native_exp2(-ev * clamp(gauss, 0.0f, 1.0f));
 
   if(isnan(relight) || isinf(relight))
     relight = 1.0f;

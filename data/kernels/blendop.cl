@@ -1349,51 +1349,51 @@ blendop_display_channel(__read_only image2d_t in_a, __read_only image2d_t in_b, 
   switch(channel & DT_DEV_PIXELPIPE_DISPLAY_ANY)
   {
     case DT_DEV_PIXELPIPE_DISPLAY_L:
-      c = clamp(a.x / 100.0f / exp2(boost_factors[DEVELOP_BLENDIF_L_in]), 0.0f, 1.0f);
+      c = clamp(a.x / 100.0f / native_exp2(boost_factors[DEVELOP_BLENDIF_L_in]), 0.0f, 1.0f);
       is_lab = 1;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_L | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
-      c = clamp(b.x / 100.0f / exp2(boost_factors[DEVELOP_BLENDIF_L_out]), 0.0f, 1.0f);
+      c = clamp(b.x / 100.0f / native_exp2(boost_factors[DEVELOP_BLENDIF_L_out]), 0.0f, 1.0f);
       is_lab = 1;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_a:
-      c = clamp(a.y / 256.0f / exp2(boost_factors[DEVELOP_BLENDIF_A_in]) + 0.5f, 0.0f, 1.0f);
+      c = clamp(a.y / 256.0f / native_exp2(boost_factors[DEVELOP_BLENDIF_A_in]) + 0.5f, 0.0f, 1.0f);
       is_lab = 1;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_a | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
-      c = clamp(b.y / 256.0f / exp2(boost_factors[DEVELOP_BLENDIF_A_out]) + 0.5f, 0.0f, 1.0f);
+      c = clamp(b.y / 256.0f / native_exp2(boost_factors[DEVELOP_BLENDIF_A_out]) + 0.5f, 0.0f, 1.0f);
       is_lab = 1;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_b:
-      c = clamp(a.z / 256.0f / exp2(boost_factors[DEVELOP_BLENDIF_B_in]) + 0.5f, 0.0f, 1.0f);
+      c = clamp(a.z / 256.0f / native_exp2(boost_factors[DEVELOP_BLENDIF_B_in]) + 0.5f, 0.0f, 1.0f);
       is_lab = 1;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_b | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
-      c = clamp(b.z / 256.0f / exp2(boost_factors[DEVELOP_BLENDIF_A_in]) + 0.5f, 0.0f, 1.0f);
+      c = clamp(b.z / 256.0f / native_exp2(boost_factors[DEVELOP_BLENDIF_A_in]) + 0.5f, 0.0f, 1.0f);
       is_lab = 1;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_R:
-      c = clamp(a.x / exp2(boost_factors[DEVELOP_BLENDIF_RED_in]), 0.0f, 1.0f);
+      c = clamp(a.x / native_exp2(boost_factors[DEVELOP_BLENDIF_RED_in]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_R | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
-      c = clamp(b.x / exp2(boost_factors[DEVELOP_BLENDIF_RED_out]), 0.0f, 1.0f);
+      c = clamp(b.x / native_exp2(boost_factors[DEVELOP_BLENDIF_RED_out]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_G:
-      c = clamp(a.y / exp2(boost_factors[DEVELOP_BLENDIF_GREEN_in]), 0.0f, 1.0f);
+      c = clamp(a.y / native_exp2(boost_factors[DEVELOP_BLENDIF_GREEN_in]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_G | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
-      c = clamp(b.y / exp2(boost_factors[DEVELOP_BLENDIF_GREEN_out]), 0.0f, 1.0f);
+      c = clamp(b.y / native_exp2(boost_factors[DEVELOP_BLENDIF_GREEN_out]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_B:
-      c = clamp(a.z / exp2(boost_factors[DEVELOP_BLENDIF_BLUE_in]), 0.0f, 1.0f);
+      c = clamp(a.z / native_exp2(boost_factors[DEVELOP_BLENDIF_BLUE_in]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_B | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
-      c = clamp(b.z / exp2(boost_factors[DEVELOP_BLENDIF_BLUE_out]), 0.0f, 1.0f);
+      c = clamp(b.z / native_exp2(boost_factors[DEVELOP_BLENDIF_BLUE_out]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_GRAY:
@@ -1401,7 +1401,7 @@ blendop_display_channel(__read_only image2d_t in_a, __read_only image2d_t in_b, 
         c = 0.3f * a.x + 0.59f * a.y + 0.11f * a.z;
       else
         c = get_rgb_matrix_luminance(a, profile_info, profile_info->matrix_in, profile_lut);
-      c = clamp(c / exp2(boost_factors[DEVELOP_BLENDIF_GRAY_in]), 0.0f, 1.0f);
+      c = clamp(c / native_exp2(boost_factors[DEVELOP_BLENDIF_GRAY_in]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_GRAY | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
@@ -1409,17 +1409,17 @@ blendop_display_channel(__read_only image2d_t in_a, __read_only image2d_t in_b, 
         c = 0.3f * b.x + 0.59f * b.y + 0.11f * b.z;
       else
         c = get_rgb_matrix_luminance(b, profile_info, profile_info->matrix_in, profile_lut);
-      c = clamp(c / exp2(boost_factors[DEVELOP_BLENDIF_GRAY_out]), 0.0f, 1.0f);
+      c = clamp(c / native_exp2(boost_factors[DEVELOP_BLENDIF_GRAY_out]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_LCH_C:
       LCH = Lab_2_LCH(a);
-      c = clamp(LCH.y / (128.0f * sqrt(2.0f) / exp2(boost_factors[DEVELOP_BLENDIF_C_in])), 0.0f, 1.0f);
+      c = clamp(LCH.y / (128.0f * sqrt(2.0f) / native_exp2(boost_factors[DEVELOP_BLENDIF_C_in])), 0.0f, 1.0f);
       is_lab = 1;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_LCH_C | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
       LCH = Lab_2_LCH(b);
-      c = clamp(LCH.y / (128.0f * sqrt(2.0f)) / exp2(boost_factors[DEVELOP_BLENDIF_C_out]), 0.0f, 1.0f);
+      c = clamp(LCH.y / (128.0f * sqrt(2.0f)) / native_exp2(boost_factors[DEVELOP_BLENDIF_C_out]), 0.0f, 1.0f);
       is_lab = 1;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_LCH_h:
@@ -1464,32 +1464,32 @@ blendop_display_channel(__read_only image2d_t in_a, __read_only image2d_t in_b, 
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_JzCzhz_Jz:
       JzCzhz = rgb_to_JzCzhz(a, profile_info, profile_lut, use_profile);
-      c = clamp(JzCzhz.x / exp2(boost_factors[DEVELOP_BLENDIF_Jz_in]), 0.0f, 1.0f);
+      c = clamp(JzCzhz.x / native_exp2(boost_factors[DEVELOP_BLENDIF_Jz_in]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_JzCzhz_Jz | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
       JzCzhz = rgb_to_JzCzhz(b, profile_info, profile_lut, use_profile);
-      c = clamp(JzCzhz.x / exp2(boost_factors[DEVELOP_BLENDIF_Jz_out]), 0.0f, 1.0f);
+      c = clamp(JzCzhz.x / native_exp2(boost_factors[DEVELOP_BLENDIF_Jz_out]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_JzCzhz_Cz:
       JzCzhz = rgb_to_JzCzhz(a, profile_info, profile_lut, use_profile);
-      c = clamp(JzCzhz.y / exp2(boost_factors[DEVELOP_BLENDIF_Cz_in]), 0.0f, 1.0f);
+      c = clamp(JzCzhz.y / native_exp2(boost_factors[DEVELOP_BLENDIF_Cz_in]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_JzCzhz_Cz | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
       JzCzhz = rgb_to_JzCzhz(b, profile_info, profile_lut, use_profile);
-      c = clamp(JzCzhz.y / exp2(boost_factors[DEVELOP_BLENDIF_Cz_out]), 0.0f, 1.0f);
+      c = clamp(JzCzhz.y / native_exp2(boost_factors[DEVELOP_BLENDIF_Cz_out]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case DT_DEV_PIXELPIPE_DISPLAY_JzCzhz_hz:
       JzCzhz = rgb_to_JzCzhz(a, profile_info, profile_lut, use_profile);
-      c = clamp(JzCzhz.z / exp2(boost_factors[DEVELOP_BLENDIF_hz_in]), 0.0f, 1.0f);
+      c = clamp(JzCzhz.z / native_exp2(boost_factors[DEVELOP_BLENDIF_hz_in]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     case (DT_DEV_PIXELPIPE_DISPLAY_JzCzhz_hz | DT_DEV_PIXELPIPE_DISPLAY_OUTPUT):
       JzCzhz = rgb_to_JzCzhz(b, profile_info, profile_lut, use_profile);
-      c = clamp(JzCzhz.z / exp2(boost_factors[DEVELOP_BLENDIF_hz_out]), 0.0f, 1.0f);
+      c = clamp(JzCzhz.z / native_exp2(boost_factors[DEVELOP_BLENDIF_hz_out]), 0.0f, 1.0f);
       is_lab = 0;
       break;
     default:
